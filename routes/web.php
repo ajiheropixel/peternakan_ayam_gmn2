@@ -5,6 +5,7 @@ use App\Http\Controllers\ChickenController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\FrontController;
+
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -49,4 +50,6 @@ Route::middleware('auth')->group(function () {
     // Route untuk tombol "Cek Pesanan" (Pesanan Masuk)
     Route::get('/admin/orders', [OrderController::class, 'index'])->name('orders.index');
 });
+// Halaman depan yang bisa diakses publik
+Route::get('/', [ProductController::class, 'welcome'])->name('welcome');
 require __DIR__.'/auth.php';

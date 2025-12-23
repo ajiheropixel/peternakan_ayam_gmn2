@@ -41,4 +41,9 @@ class ProductController extends Controller {
         $product->delete();
         return redirect()->back()->with('success', 'Produk berhasil dihapus!');
     }
+    public function welcome()
+{
+    $products = Product::all();
+    return view('welcome', compact('products'));
+}
 }
