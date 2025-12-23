@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', [FrontController::class, 'index'])->name('home');
-
+Route::resource('chickens', ChickenController::class);
 
 // Route Dashboard (Setelah Login)
 Route::get('/dashboard', function () {

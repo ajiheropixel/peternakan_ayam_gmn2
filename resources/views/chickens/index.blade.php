@@ -18,21 +18,32 @@
                             <th class="px-6 py-4 text-center text-xs font-bold text-green-700 uppercase tracking-widest">Aksi</th>
                         </tr>
                     </thead>
-                    <tbody class="divide-y divide-gray-100">
-                       @foreach($chickens as $chicken)
-<tr>
-    <td class="px-6 py-4 font-bold">{{ $chicken->nama_kandang }}</td>
-    <td class="px-6 py-4">{{ $chicken->jenis_ayam }}</td>
-    <td class="px-6 py-4 font-bold">{{ number_format($chicken->jumlah) }} Ekor</td>
-    <td class="px-6 py-4">
-        <form action="{{ route('chickens.destroy', $chicken->id) }}" method="POST">
-            @csrf @method('DELETE')
-            <button class="text-red-500">Hapus</button>
-        </form>
-    </td>
-</tr>
-@endforeach
-                    </tbody>
+                  <tbody class="divide-y divide-gray-100">
+    @foreach($chickens as $chicken)
+    <tr class="hover:bg-green-50/20 transition">
+        <td class="px-6 py-5 font-bold text-gray-800 uppercase">{{ $chicken->nama_kandang }}</td>
+        <td class="px-6 py-5 text-gray-600 font-medium italic">{{ $chicken->jenis_ayam }}</td>
+        <td class="px-6 py-5 font-black text-gray-900 text-center text-lg">
+            {{ number_format($chicken->jumlah_ekor) }} <span class="text-xs text-gray-400">Ekor</span>
+        </td>
+        
+        <td class="px-6 py-5">
+            <div class="flex justify-end items-center gap-6">
+                <a href="{{ route('chickens.edit', $chicken->id) }}" class="text-blue-500 hover:text-blue-700 font-bold text-sm transition">
+                    Edit
+                </a>
+                <form action="{{ route('chickens.destroy', $chicken->id) }}" method="POST" onsubmit="return confirm('Hapus data ini?')">
+                    @csrf 
+                    @method('DELETE')
+                    <button type="submit" class="text-red-400 hover:text-red-600 font-bold text-sm transition">
+                        Hapus
+                    </button>
+                </form>
+            </div>
+        </td>
+    </tr>
+    @endforeach
+</tbody>
                 </table>
             </div>
         </div>
