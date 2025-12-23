@@ -3,76 +3,159 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FreshFarm - Produk Peternakan Segar</title>
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
+    <title>FreshFarm - Modern Poultry Solution</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Plus+Jakarta+Sans', sans-serif; }
+    </style>
 </head>
-<body class="bg-gray-50 font-sans">
+<body class="bg-white text-gray-900">
 
-    <nav class="bg-white/80 backdrop-blur-md sticky top-0 z-50 border-b border-gray-100">
-        <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
-            <h1 class="text-2xl font-black text-green-600 italic tracking-tighter">FRESH<span class="text-gray-900">FARM.</span></h1>
-            <div class="flex items-center gap-6">
-                @if (Route::has('login'))
-                    @auth
-                        <a href="{{ url('/dashboard') }}" class="text-sm font-bold text-gray-700 hover:text-green-600 transition">Dashboard</a>
-                    @else
-                        <a href="{{ route('login') }}" class="text-sm font-bold text-gray-700">Masuk</a>
-                        <a href="{{ route('register') }}" class="bg-green-600 text-white px-6 py-2.5 rounded-2xl text-sm font-bold shadow-lg shadow-green-200 hover:bg-green-700 transition">Daftar</a>
-                    @endauth
-                @endif
+    <nav class="fixed w-full z-50 bg-white/70 backdrop-blur-lg border-b border-gray-100">
+        <div class="max-w-7xl mx-auto px-6 h-20 flex justify-between items-center">
+            <div class="text-2xl font-black text-green-600 italic tracking-tighter">FRESH<span class="text-black">FARM.</span></div>
+            <div class="hidden md:flex gap-8 text-sm font-bold uppercase tracking-widest text-gray-500">
+                <a href="#home" class="hover:text-green-600 transition">Beranda</a>
+                <a href="#produk" class="hover:text-green-600 transition">Produk</a>
+                <a href="#tentang" class="hover:text-green-600 transition">Tentang Kami</a>
+            </div>
+            <div class="flex items-center gap-4">
+                @auth
+                    <a href="{{ url('/dashboard') }}" class="px-6 py-2.5 bg-black text-white rounded-2xl text-sm font-bold hover:bg-green-600 transition">Dashboard</a>
+                @else
+                    <a href="{{ route('register') }}" class="text-sm font-bold">Register</a>
+                    <a href="{{ route('login') }}" class="px-6 py-2.5 bg-green-600 text-white rounded-2xl text-sm font-bold shadow-lg shadow-green-200 hover:bg-green-700 transition">Masuk Sekarang</a>
+                @endauth
             </div>
         </div>
     </nav>
 
-    <header class="py-20 bg-white">
-        <div class="max-w-7xl mx-auto px-6 text-center">
-            <span class="bg-green-100 text-green-700 px-4 py-1.5 rounded-full text-xs font-black uppercase tracking-widest">Kualitas Terbaik</span>
-            <h2 class="text-5xl md:text-7xl font-black text-gray-900 mt-6 mb-4 tracking-tight">Hasil Ternak Segar <br> <span class="text-green-600">Langsung ke Meja Anda.</span></h2>
-            <p class="text-gray-500 max-w-2xl mx-auto text-lg">Kami menyediakan produk ayam dan telur berkualitas tinggi dari peternakan lokal yang dikelola dengan standar modern.</p>
-        </div>
-    </header>
-
-    <section class="py-20">
-        <div class="max-w-7xl mx-auto px-6">
-            <div class="flex items-end justify-between mb-12">
-                <div>
-                    <h3 class="text-3xl font-bold text-gray-900">Katalog Produk</h3>
-                    <p class="text-gray-500 mt-1">Pilih produk segar untuk kebutuhan protein Anda.</p>
+    <section id="home" class="pt-32 pb-20 px-6">
+        <div class="max-w-7xl mx-auto grid md:grid-cols-2 gap-12 items-center">
+            <div>
+                <span class="inline-block px-4 py-2 bg-green-50 text-green-700 rounded-full text-xs font-black uppercase tracking-widest mb-6">Farm-to-Table Experience</span>
+                <h1 class="text-6xl md:text-8xl font-black leading-[0.9] tracking-tighter mb-8">
+                    Protein <span class="text-green-600">Terbaik</span> <br> Untuk Keluarga.
+                </h1>
+                <p class="text-lg text-gray-500 mb-10 max-w-md">Kami mengintegrasikan teknologi IoT pada peternakan untuk memastikan setiap ayam dan telur yang sampai ke tangan Anda memiliki kualitas Grade A.</p>
+                <div class="flex gap-4">
+                    <a href="#produk" class="px-8 py-4 bg-black text-white rounded-2xl font-bold hover:scale-105 transition">Belanja Sekarang</a>
+                    <div class="flex -space-x-3 items-center ml-4">
+                        <div class="w-10 h-10 rounded-full bg-gray-200 border-2 border-white"></div>
+                        <div class="w-10 h-10 rounded-full bg-gray-300 border-2 border-white"></div>
+                        <p class="pl-6 text-xs font-bold text-gray-400 uppercase">DIPERCAYA 2K+ IBU RUMAH TANGGA</p>
+                    </div>
                 </div>
             </div>
-
-            <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-8">
-                @forelse($products as $product)
-                <div class="group bg-white rounded-[2.5rem] overflow-hidden border border-gray-100 shadow-sm hover:shadow-2xl hover:-translate-y-2 transition-all duration-300">
-                    <div class="relative aspect-square overflow-hidden">
-                        <img src="{{ asset('storage/'.$product->gambar) }}" alt="{{ $product->nama_produk }}" class="w-full h-full object-cover group-hover:scale-110 transition duration-500" onerror="this.src='https://placehold.co/400x400?text=Produk+Segar'">
-                        <div class="absolute top-4 right-4 bg-white/90 backdrop-blur px-3 py-1 rounded-full text-[10px] font-black uppercase text-gray-900">Stok: {{ $product->stok }}</div>
-                    </div>
-                    <div class="p-8">
-                        <h4 class="text-xl font-bold text-gray-900 mb-1 capitalize">{{ $product->nama_produk }}</h4>
-                        <p class="text-green-600 font-black text-2xl mb-6">Rp {{ number_format($product->harga, 0, ',', '.') }}</p>
-                        
-                        <button class="w-full bg-gray-900 text-white py-4 rounded-2xl font-bold hover:bg-green-600 shadow-lg transition-colors duration-300 flex items-center justify-center gap-2">
-                            <span>Beli Sekarang</span>
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
-                            </svg>
-                        </button>
-                    </div>
+            <div class="relative">
+                <div class="w-full aspect-square bg-green-100 rounded-[3rem] overflow-hidden rotate-3 shadow-2xl">
+                    <img src="https://images.unsplash.com/photo-1548550023-2bdb3c5beed7?q=80&w=1000&auto=format&fit=crop" class="w-full h-full object-cover -rotate-3 scale-110">
                 </div>
-                @empty
-                <div class="col-span-full text-center py-20">
-                    <p class="text-gray-400 italic">Mohon maaf, saat ini belum ada produk yang tersedia.</p>
-                </div>
-                @endforelse
             </div>
         </div>
     </section>
 
-    <footer class="bg-white border-t border-gray-100 py-12">
-        <div class="text-center">
-            <p class="text-gray-400 text-xs font-bold uppercase tracking-[0.3em]">© 2025 FreshFarm Peternakan Ayam Modern</p>
+    <section class="py-24 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-6 grid md:grid-cols-3 gap-12">
+            <div class="p-10 bg-white rounded-[2.5rem] shadow-sm">
+                <div class="w-14 h-14 bg-green-100 rounded-2xl flex items-center justify-center mb-6 text-green-600">
+                    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                </div>
+                <h3 class="text-xl font-black mb-4 uppercase italic">100% Organik</h3>
+                <p class="text-gray-500 text-sm leading-relaxed">Tanpa suntikan hormon atau bahan kimia berbahaya. Ayam tumbuh secara alami dengan pakan bernutrisi tinggi.</p>
+            </div>
+            <div class="p-10 bg-white rounded-[2.5rem] shadow-sm">
+                <div class="w-14 h-14 bg-blue-100 rounded-2xl flex items-center justify-center mb-6 text-blue-600">
+                    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+                </div>
+                <h3 class="text-xl font-black mb-4 uppercase italic">Pengiriman Cepat</h3>
+                <p class="text-gray-500 text-sm leading-relaxed">Sistem logistik terintegrasi memastikan produk sampai ke rumah Anda maksimal 3 jam setelah dipanen.</p>
+            </div>
+            <div class="p-10 bg-white rounded-[2.5rem] shadow-sm">
+                <div class="w-14 h-14 bg-orange-100 rounded-2xl flex items-center justify-center mb-6 text-orange-600">
+                    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                </div>
+                <h3 class="text-xl font-black mb-4 uppercase italic">Harga Petani</h3>
+                <p class="text-gray-500 text-sm leading-relaxed">Memotong rantai distribusi panjang, sehingga Anda mendapatkan harga terbaik langsung dari sumbernya.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="produk" class="py-24">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-black italic tracking-tighter uppercase mb-2">Produk Unggulan Kami</h2>
+                <p class="text-gray-400 uppercase text-xs font-bold tracking-[0.3em]">Terbatas & Selalu Segar Setiap Hari</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-10">
+                @foreach($products as $product)
+                <div class="group relative">
+                    <div class="aspect-[4/5] bg-gray-100 rounded-[2.5rem] overflow-hidden mb-6">
+                        <img src="{{ asset('storage/'.$product->gambar) }}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                        <div class="absolute top-5 left-5">
+                            <span class="px-4 py-1.5 bg-white/90 backdrop-blur rounded-full text-[10px] font-black uppercase tracking-widest">Tersedia</span>
+                        </div>
+                    </div>
+                    <h4 class="text-lg font-black uppercase italic mb-1">{{ $product->nama_produk }}</h4>
+                    <p class="text-2xl font-black text-green-600 mb-4">Rp {{ number_format($product->harga, 0, ',', '.') }}</p>
+                    <button class="w-full py-4 border-2 border-black rounded-2xl font-black uppercase text-xs tracking-widest hover:bg-black hover:text-white transition">Tambah ke Keranjang</button>
+                </div>
+                @endforeach
+            </div>
+        </div>
+    </section>
+
+    <section class="py-24 bg-black text-white overflow-hidden">
+        <div class="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-20 items-center">
+            <div>
+                <h2 class="text-5xl font-black tracking-tighter italic mb-8 uppercase leading-none">Apa Kata <br> Pelanggan Kami?</h2>
+                <div class="p-8 border-l-4 border-green-500 bg-white/5">
+                    <p class="text-xl italic mb-6 text-gray-300">"Kualitas ayamnya beda banget sama di pasar. Lebih bersih, nggak bau, dan pas dimasak dagingnya empuk banget. Langganan terus tiap minggu!"</p>
+                    <div class="flex items-center gap-4">
+                        <div class="w-12 h-12 rounded-full bg-green-500"></div>
+                        <div>
+                            <p class="font-bold">Sarah Wijaya</p>
+                            <p class="text-xs text-gray-500 uppercase font-bold">Food Blogger</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="grid grid-cols-2 gap-4">
+                <div class="aspect-square bg-white/10 rounded-3xl"></div>
+                <div class="aspect-square bg-green-600 rounded-3xl mt-12"></div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="pt-24 pb-12 bg-white">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="grid md:grid-cols-4 gap-12 mb-20">
+                <div class="col-span-2">
+                    <div class="text-3xl font-black text-green-600 italic tracking-tighter mb-6">FRESH<span class="text-black">FARM.</span></div>
+                    <p class="text-gray-400 max-w-sm">Membangun masa depan peternakan Indonesia dengan teknologi dan integritas. Segar dari kandang, langsung ke piring Anda.</p>
+                </div>
+                <div>
+                    <h5 class="font-black uppercase text-xs tracking-widest mb-6">Menu</h5>
+                    <ul class="text-gray-500 space-y-4 text-sm font-bold">
+                        <li><a href="#" class="hover:text-black">Katalog Produk</a></li>
+                        <li><a href="#" class="hover:text-black">Tentang Kami</a></li>
+                        <li><a href="#" class="hover:text-black">Hubungi Kami</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h5 class="font-black uppercase text-xs tracking-widest mb-6">Kontak</h5>
+                    <ul class="text-gray-500 space-y-4 text-sm font-bold">
+                        <li>hello@freshfarm.id</li>
+                        <li>+62 812 3456 7890</li>
+                        <li>Jakarta, Indonesia</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-gray-100 pt-12 text-center">
+                <p class="text-gray-400 text-[10px] font-black uppercase tracking-[0.4em]">© 2025 UAS PEMROGRAMAN WEB - ALL RIGHTS RESERVED</p>
+            </div>
         </div>
     </footer>
 
