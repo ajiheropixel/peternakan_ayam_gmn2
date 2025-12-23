@@ -1,11 +1,17 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Models;
 
-use Illuminate\Http\Request;
-
+use Illuminate\Database\Eloquent\Model;
 
 class Chicken extends Model
 {
-    protected $fillable = ['kode_kandang', 'jenis_ayam', 'jumlah_ekor', 'tanggal_masuk'];
+    public $timestamps = false;
+
+    // Pastikan nama kolom di sini SAMA dengan di phpMyAdmin
+    protected $fillable = [
+        'nama_kandang', 
+        'jenis_ayam', 
+        'jumlah_ekor' // Sesuaikan dari 'jumlah' menjadi 'jumlah_ekor'
+    ];
 }

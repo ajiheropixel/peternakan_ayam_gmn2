@@ -2,19 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Order;
 use Illuminate\Http\Request;
 
 class OrderController extends Controller
 {
-    public function index() {
-    // Ambil semua pesanan terbaru beserta data user dan produknya
-    $orders = \App\Models\Order::with(['user', 'product'])->latest()->get();
-    return view('admin.orders.index', compact('orders'));
-}
-
-public function updateStatus(Request $request, $id) {
-    $order = \App\Models\Order::findOrFail($id);
-    $order->update(['status' => $request->status]);
-    return redirect()->back()->with('success', 'Status pesanan diperbarui!');
-}
+    public function index()
+    {
+        // Mengambil semua order beserta data user dan produknya
+        $orders = Order::with(['user', 'product'])->get();
+        return view('admin.orders.index', compact('orders'));
+    }
 }

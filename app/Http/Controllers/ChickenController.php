@@ -1,29 +1,31 @@
 <?php
-
 namespace App\Http\Controllers;
-
+use App\Models\Chicken;
 use Illuminate\Http\Request;
 
-
-class ChickenController extends Controller
-{
+class ChickenController extends Controller {
     public function index() {
-    $chickens = \App\Models\Chicken::all(); // Ambil semua data ayam
-    return view('admin.chickens.index', compact('chickens'));
-}
-public function store(Request $request)
+        $chickens = Chicken::all();
+        return view('chickens.index', compact('chickens'));
+    }
+    public function create() { return view('chickens.create'); }
+   public function store(Request $request)
 {
-    // Validasi data agar tidak kosong
+    // Validasi data
     $request->validate([
-        'kode_kandang' => 'required|unique:chickens',
+        'nama_kandang' => 'required',
         'jenis_ayam' => 'required',
         'jumlah_ekor' => 'required|numeric',
-        'tanggal_masuk' => 'required|date',
     ]);
 
     // Simpan ke database
-    \App\Models\Chicken::create($request->all());
+    \App\Models\Chicken::create([
+        'nama_kandang' => $request->nama_kandang,
+        'jenis_ayam'   => $request->jenis_ayam,
+        'jumlah_ekor'       => $request->jumlah_ekor,
+    ]);
 
-    return redirect()->route('chickens.index')->with('success', 'Data berhasil ditambahkan!');
+    // Kembali ke halaman utama dengan pesan sukses
+    return redirect()->route('chickens.index')->with('success', 'Stok berhasil ditambah!');
 }
 }

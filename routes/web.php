@@ -39,5 +39,14 @@ Route::middleware('auth')->group(function () {
     Route::get('/admin/orders', [OrderController::class, 'index'])->name('orders.index');
     Route::post('/admin/orders/{id}/status', [OrderController::class, 'updateStatus'])->name('orders.update');
 });
+Route::middleware('auth')->group(function () {
+    // Route untuk tombol "Buka Manajemen" (Stok Ayam)
+    Route::resource('chickens', ChickenController::class);
 
+    // Route untuk tombol "Kelola Produk" (Katalog Produk)
+    Route::resource('products', ProductController::class);
+
+    // Route untuk tombol "Cek Pesanan" (Pesanan Masuk)
+    Route::get('/admin/orders', [OrderController::class, 'index'])->name('orders.index');
+});
 require __DIR__.'/auth.php';
