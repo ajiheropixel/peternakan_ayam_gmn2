@@ -4,6 +4,8 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ChickenController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\AdminOrderController;
 use App\Http\Controllers\FrontController;
 
 use Illuminate\Support\Facades\Route;
@@ -53,3 +55,13 @@ Route::middleware('auth')->group(function () {
 // Halaman depan yang bisa diakses publik
 Route::get('/', [ProductController::class, 'welcome'])->name('welcome');
 require __DIR__.'/auth.php';
+// Satu-satunya route dashboard
+Route::get('/dashboard', [DashboardController::class, 'index'])
+    ->middleware(['auth', 'verified'])
+    ->name('dashboard');
+
+// Route Admin (Pastikan namanya admin.orders.index)
+Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () {
+    Route::get('/orders', [AdminOrderController::class, 'index'])->name('orders.index');
+    Route::patch('/orders/{id}/status', [AdminOrderController::class, 'updateStatus'])->name('orders.update');
+});
